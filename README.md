@@ -27,7 +27,7 @@ Usage
 -------
 ```
 table = XMLA::Cube.execute "select [Location].[City].children  on COLUMNS,
-                                   [Measures].[Count] on ROWSi
+                                   [Measures].[Count] on ROWS
                             from [GOSJAR]"
 ```
 

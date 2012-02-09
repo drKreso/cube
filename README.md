@@ -1,7 +1,7 @@
 Cube
 ================
 
-Use this gem talk to the OLAP based backend via Xmla SOAP messages.
+Use this gem talk to the OLAP based backend via XMLA SOAP messages from Ruby.
 You can send (simple) MDX queries and get the result back in a human friendly from. 
 
 Installation
@@ -17,7 +17,7 @@ Configuration
 Set up your catalog and endpoint
 
 ```
-Xmla.configure do |c|
+XMLA.configure do |c|
  c.endpoint = "http://localhost:8282/icCube/xmla"
  c.catalog = "GOSJAR"
 end

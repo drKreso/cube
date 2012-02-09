@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = "cube"
-  s.version = ""
+  s.version = "1.0.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["drKreso"]
@@ -24,6 +24,7 @@ Gem::Specification.new do |s|
     "LICENSE.txt",
     "README.md",
     "Rakefile",
+    "VERSION",
     "cube.gemspec",
     "lib/cube.rb",
     "lib/cube/cube.rb",

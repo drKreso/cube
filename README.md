@@ -26,7 +26,7 @@ end
 Usage
 -------
 ```
-result_table = Cube.execute("select [Location].[City].children  on COLUMNS, [Measures].[Count] on ROWS from [GOSJAR]") 
+table = Cube.execute("select [Location].[City].children  on COLUMNS, [Measures].[Count] on ROWS from [GOSJAR]") 
 ```
 
 Limitations

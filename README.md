@@ -6,9 +6,10 @@ You can send (simple) MDX queries and get the result back in a human friendly fr
 
 Installation
 ------------
+Add to Gemfile
 
 ```
-require 'cube'
+gem 'cube'
 ```
 
 Configuration
@@ -25,7 +26,7 @@ end
 Usage
 -------
 ```
-  result_table = Cube.execute("select [Lokacija].[Kvart].children  on COLUMNS, [Measures].[Broj] on ROWS from [GOSJAR]") 
+result_table = Cube.execute("select [Location].[City].children  on COLUMNS, [Measures].[Count] on ROWS from [GOSJAR]") 
 ```
 
 Limitations

@@ -26,7 +26,9 @@ end
 Usage
 -------
 ```
-table = Cube.execute("select [Location].[City].children  on COLUMNS, [Measures].[Count] on ROWS from [GOSJAR]") 
+table = XMLA::Cube.execute "select [Location].[City].children  on COLUMNS,
+                                   [Measures].[Count] on ROWSi
+                            from [GOSJAR]"
 ```
 
 Limitations

@@ -8,6 +8,7 @@ source "http://rubygems.org"
 
 gem "savon"
 gem "webmock"
+gem "guerrilla_patch"
 
 group :development do
   gem "vcr"

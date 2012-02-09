@@ -1,4 +1,5 @@
 require 'savon'
+require 'guerrilla_patch'
 
 Savon.configure do |config|
   config.soap_version = 1
@@ -7,11 +8,11 @@ end
 
 HTTPI.log = false
 
-module Xmla
+module XMLA
 
   class Cube
 
-    def Cube.execute(query, catalog = Xmla.catalog)
+    def Cube.execute(query, catalog = XMLA.catalog)
       Cube.new(query, catalog).as_table
     end
 
@@ -19,10 +20,10 @@ module Xmla
       clean_table(table, y_size).reduce([]) { |result, row| result << row.flatten.join('|') }
     end
 
-    def x_axe() @x_axe ||= axes[0] end
-    def y_axe() @y_axe ||= axes[1] end
-    def y_size() y_axe[0].size end
-    def x_size() x_axe.size end
+    let(:x_axe)  { @x_axe ||= axes[0] }
+    let(:y_axe)  { @y_axe ||= axes[1] }
+    let(:y_size) { y_axe[0].size }
+    let(:x_size) { x_axe.size }
 
     private
 
@@ -66,7 +67,7 @@ module Xmla
     def get_response
       client = Savon::Client.new do
         wsdl.document = File.expand_path("../../wsdl/xmla.xml", __FILE__)
-        wsdl.endpoint = Xmla.endpoint
+        wsdl.endpoint = XMLA.endpoint
       end
 
       @response = client.request :execute,  xmlns:"urn:schemas-microsoft-com:xml-analysis" do
@@ -91,7 +92,7 @@ module Xmla
       @data ||= cell_data.reduce([]) { |data, cell| cell[1].reduce(data) { |data, value| data << value[:value] } }
     end
 
-    def tuple(axe) axe[:tuples][:tuple] end
+    let(:tuple) { |axe| axe[:tuples][:tuple] }
 
   end
 end

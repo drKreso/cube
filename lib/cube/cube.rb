@@ -38,24 +38,21 @@ module Xmla
     def axes
       axes = @response.to_hash[:execute_response][:return][:root][:axes][:axis].select { |axe| axe[:@name] != "SlicerAxis" }
       @axes ||= axes.reduce([]) do |result, axe|
-        y = tuple(axe).reduce([]) { |y, member|
+        result << tuple(axe).reduce([]) { |y, member|
           data = (member[0] == :member) ? member[1] : member[:member]
           if data.class == Hash
             y << [data[:caption].strip]
           elsif data.size == 1
             y <<  data[:caption].strip
           else
-            z = []
-            data.each do |item_data|
+            y << data.reduce([]) { |z, item_data|
               if (item_data.class == Hash)
                 caption = item_data[:caption].strip
                 z << caption
               end
-            end
-            y << z
+            }
           end
         }
-        result << y
       end
     end
 

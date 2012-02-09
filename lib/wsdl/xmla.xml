@@ -1,0 +1,104 @@
+﻿<?xml version='1.0' encoding='UTF-8' ?> 
+ <!-- Generated 04/26/01 by Microsoft SOAP Toolkit WSDL File Generator, Version 1.00.623.0 --> 
+<definitions  name ='msxmla'   targetNamespace = 'http://tempuri.org/wsdl/'
+	 xmlns:wsdlns='http://tempuri.org/wsdl/' 
+	 xmlns:typens='http://tempuri.org/type' 
+	 xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' 
+	 xmlns:xsd='http://www.w3.org/2001/XMLSchema' 
+	 xmlns:stk='http://schemas.microsoft.com/soap-toolkit/wsdl-extension'
+	 xmlns='http://schemas.xmlsoap.org/wsdl/'> 
+  <types>
+    <schema targetNamespace='http://tempuri.org/type'
+      xmlns='http://www.w3.org/2001/XMLSchema'
+      xmlns:SOAP-ENC='http://schemas.xmlsoap.org/soap/encoding/'
+      xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/'
+      elementFormDefault='qualified'>
+      <complexType  name ='clsXMLAProx.Discover.Result'>
+        <sequence>
+          <any minOccurs='0' maxOccurs='unbounded' namespace='#any' processContents='skip'/>
+        </sequence>
+      </complexType>
+      <complexType  name ='clsXMLAProx.Discover.Restrictions'>
+        <sequence>
+          <any minOccurs='0' maxOccurs='unbounded' namespace='#any' processContents='skip'/>
+        </sequence>
+      </complexType>
+      <complexType  name ='clsXMLAProx.Discover.Properties'>
+        <sequence>
+          <any minOccurs='0' maxOccurs='unbounded' namespace='#any' processContents='skip'/>
+        </sequence>
+      </complexType>
+      <complexType  name ='clsXMLAProx.Execute.Result'>
+        <sequence>
+          <any minOccurs='0' maxOccurs='unbounded' namespace='#any' processContents='skip'/>
+        </sequence>
+      </complexType>
+      <complexType  name ='clsXMLAProx.Execute.Command'>
+        <sequence>
+          <any minOccurs='0' maxOccurs='unbounded' namespace='#any' processContents='skip'/>
+        </sequence>
+      </complexType>
+      <complexType  name ='clsXMLAProx.Execute.Properties'>
+        <sequence>
+          <any minOccurs='0' maxOccurs='unbounded' namespace='#any' processContents='skip'/>
+        </sequence>
+      </complexType>
+    </schema>
+  </types>
+  <message name='clsXMLAProx.Discover'>
+    <part name='RequestType' type='xsd:string'/>
+    <part name='Restrictions' type='typens:clsXMLAProx.Discover.Restrictions'/>
+    <part name='Properties' type='typens:clsXMLAProx.Discover.Properties'/>
+  </message>
+  <message name='clsXMLAProx.DiscoverResponse'>
+    <part name='Result' type='typens:clsXMLAProx.Discover.Result'/>
+  </message>
+  <message name='clsXMLAProx.Execute'>
+    <part name='Command' type='typens:clsXMLAProx.Execute.Command'/>
+    <part name='Properties' type='typens:clsXMLAProx.Execute.Properties'/>
+  </message>
+  <message name='clsXMLAProx.ExecuteResponse'>
+    <part name='Result' type='typens:clsXMLAProx.Execute.Result'/>
+  </message>
+  <portType name='clsXMLAProxSoapPort'>
+    <operation name='Discover' parameterOrder='RequestType Restrictions Properties'>
+      <input message='wsdlns:clsXMLAProx.Discover' />
+      <output message='wsdlns:clsXMLAProx.DiscoverResponse' />
+    </operation>
+    <operation name='Execute' parameterOrder='Command Properties'>
+      <input message='wsdlns:clsXMLAProx.Execute' />
+      <output message='wsdlns:clsXMLAProx.ExecuteResponse' />
+    </operation>
+  </portType>
+  <binding name='clsXMLAProxSoapBinding' type='wsdlns:clsXMLAProxSoapPort' >
+    <stk:binding preferredEncoding='UTF-8'/>
+    <soap:binding style='rpc' transport='http://schemas.xmlsoap.org/soap/http' />
+    <operation name='Discover' >
+      <soap:operation soapAction='urn:schemas-microsoft-com:xml-analysis:Discover' />
+      <input>
+        <soap:body use='encoded' namespace='urn:schemas-microsoft-com:xml-analysis'
+		  encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' />
+      </input>
+      <output>
+        <soap:body use='encoded' namespace='urn:schemas-microsoft-com:xml-analysis'
+		  encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' />
+      </output>
+    </operation>
+    <operation name='Execute' >
+      <soap:operation soapAction='urn:schemas-microsoft-com:xml-analysis:Execute' />
+      <input>
+        <soap:body use='encoded' namespace='urn:schemas-microsoft-com:xml-analysis'
+		  encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' />
+      </input>
+      <output>
+        <soap:body use='encoded' namespace='urn:schemas-microsoft-com:xml-analysis'
+		  encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' />
+      </output>
+    </operation>
+  </binding>
+  <service name='msxmla' >
+    <port name='clsXMLAProxSoapPort' binding='wsdlns:clsXMLAProxSoapBinding' >
+      <soap:address location='http://localhost/xmla/msxisapi.dll' />
+    </port>
+  </service>
+</definitions>

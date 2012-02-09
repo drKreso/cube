@@ -1,0 +1,219 @@
+---
+- !ruby/struct:VCR::HTTPInteraction
+  request: !ruby/struct:VCR::Request
+    method: :post
+    uri: http://localhost:8282/icCube/xmla
+    body: ! "<?xml version=\"1.0\" encoding=\"UTF-8\"?><env:Envelope xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"
+      xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:wsdl=\"http://tempuri.org/wsdl/\"
+      xmlns:env=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ins0=\"http://tempuri.org/type\"><env:Body><Execute
+      xmlns=\"urn:schemas-microsoft-com:xml-analysis\"><Command> <Statement> <![CDATA[
+      select [Measures].[Broj]  on COLUMNS, non empty topcount ( [Razlog prijave].[Razlog].children
+      * [Lokacija].[Kvart].children , 20,  [Measures].[Broj] ) on ROWS from [GOSJAR]
+      ]]> </Statement> </Command> <Properties> <PropertyList> <Catalog>GOSJAR</Catalog>\n
+      \                  <Format>Multidimensional</Format> <AxisFormat>TupleFormat</AxisFormat>
+      </PropertyList> </Properties></Execute></env:Body></env:Envelope>"
+    headers:
+      soapaction:
+      - ! '"urn:schemas-microsoft-com:xml-analysis:Execute"'
+      content-type:
+      - text/xml;charset=UTF-8
+      content-length:
+      - '788'
+  response: !ruby/struct:VCR::Response
+    status: !ruby/struct:VCR::ResponseStatus
+      code: 200
+      message: OK
+    headers:
+      expires:
+      - Thu, 01-Jan-1970 00:00:00 GMT
+      set-cookie:
+      - JSESSIONID=17ppia5d4a6s4ye5e3kyuvczs;Path=/
+      content-type:
+      - text/xml; charset=utf-8
+      transfer-encoding:
+      - chunked
+      server:
+      - Jetty(6.1.25)
+    body: ! '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Header><Session
+      SessionId="0015d5a5-fa0b-4c32-ad94-36f4c1a79b55" xmlns="urn:schemas-microsoft-com:xml-analysis"/></soap:Header><soap:Body><ExecuteResponse
+      xmlns="urn:schemas-microsoft-com:xml-analysis"><return><root xmlns="urn:schemas-microsoft-com:xml-analysis:mddataset"
+      xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><xs:schema
+      targetNamespace="urn:schemas-microsoft-com:xml-analysis:mddataset" elementFormDefault="qualified"
+      xmlns="urn:schemas-microsoft-com:xml-analysis:mddataset" xmlns:xs="http://www.w3.org/2001/XMLSchema">    <xs:complexType
+      name="MemberType">        <xs:sequence>            <xs:any namespace="##targetNamespace"
+      minOccurs="0" maxOccurs="unbounded" processContents="skip"/>        </xs:sequence>        <xs:attribute
+      name="Hierarchy" type="xs:string"/>    </xs:complexType>    <xs:complexType
+      name="PropType">        <xs:sequence>            <xs:element name="Default"
+      minOccurs="0"/>        </xs:sequence>        <xs:attribute name="name" type="xs:string"
+      use="required"/>        <xs:attribute name="type" type="xs:QName"/>    </xs:complexType>    <xs:complexType
+      name="TupleType">        <xs:sequence>            <xs:element name="Member"
+      type="MemberType" maxOccurs="unbounded"/>        </xs:sequence>    </xs:complexType>    <xs:complexType
+      name="MembersType">        <xs:sequence>            <xs:element name="Member"
+      type="MemberType" minOccurs="0" maxOccurs="unbounded"/>        </xs:sequence>        <xs:attribute
+      name="Hierarchy" type="xs:string" use="required"/>    </xs:complexType>    <xs:complexType
+      name="TuplesType">        <xs:sequence>            <xs:element name="Tuple"
+      type="TupleType" minOccurs="0" maxOccurs="unbounded"/>        </xs:sequence>    </xs:complexType>    <xs:group
+      name="SetType">        <xs:choice>            <xs:element name="Members" type="MembersType"/>            <xs:element
+      name="Tuples" type="TuplesType"/>            <xs:element name="CrossProduct"
+      type="SetListType"/>            <xs:element name="Union">                <xs:complexType>                    <xs:group
+      ref="SetType" minOccurs="0" maxOccurs="unbounded"/>                </xs:complexType>            </xs:element>        </xs:choice>    </xs:group>    <xs:complexType
+      name="SetListType">        <xs:group ref="SetType" minOccurs="0" maxOccurs="unbounded"/>        <xs:attribute
+      name="Size" type="xs:unsignedInt"/>    </xs:complexType>    <xs:complexType
+      name="OlapInfo">        <xs:sequence>            <xs:element name="CubeInfo">                <xs:complexType>                    <xs:sequence>                        <xs:element
+      name="Cube" maxOccurs="unbounded">                            <xs:complexType>                                <xs:sequence>                                    <xs:element
+      name="CubeName" type="xs:string"/>                                    <xs:element
+      name="LastDataUpdate" minOccurs="0" type="xs:dateTime"/>                                    <xs:element
+      name="LastSchemaUpdate" minOccurs="0" type="xs:dateTime"/>                                </xs:sequence>                            </xs:complexType>                        </xs:element>                    </xs:sequence>                </xs:complexType>            </xs:element>            <xs:element
+      name="AxesInfo">                <xs:complexType>                    <xs:sequence>                        <xs:element
+      name="AxisInfo" maxOccurs="unbounded">                            <xs:complexType>                                <xs:sequence>                                    <xs:element
+      name="HierarchyInfo" minOccurs="0" maxOccurs="unbounded">                                        <xs:complexType>                                            <xs:sequence>                                                <xs:any
+      namespace="##targetNamespace" minOccurs="0" maxOccurs="unbounded" processContents="skip"/>                                            </xs:sequence>                                            <xs:attribute
+      name="name" type="xs:string" use="required"/>                                        </xs:complexType>                                    </xs:element>                                </xs:sequence>                                <xs:attribute
+      name="name" type="xs:string"/>                            </xs:complexType>                        </xs:element>                    </xs:sequence>                </xs:complexType>            </xs:element>            <xs:element
+      name="CellInfo">                <xs:complexType>                    <xs:choice
+      minOccurs="0" maxOccurs="unbounded">                        <xs:any namespace="##targetNamespace"
+      minOccurs="0" maxOccurs="unbounded" processContents="skip"/>                    </xs:choice>                </xs:complexType>            </xs:element>        </xs:sequence>    </xs:complexType>    <xs:complexType
+      name="Axes">        <xs:sequence>            <xs:element name="Axis" maxOccurs="unbounded">                <xs:complexType>                    <xs:group
+      ref="SetType" minOccurs="0" maxOccurs="unbounded"/>                    <xs:attribute
+      name="name" type="xs:string"/>                </xs:complexType>            </xs:element>        </xs:sequence>    </xs:complexType>    <xs:complexType
+      name="CellData">        <xs:sequence>            <xs:element name="Cell" minOccurs="0"
+      maxOccurs="unbounded">                <xs:complexType>                    <xs:sequence>                        <xs:any
+      namespace="##targetNamespace" minOccurs="0" maxOccurs="unbounded" processContents="skip"/>                    </xs:sequence>                    <xs:attribute
+      name="CellOrdinal" type="xs:unsignedInt" use="required"/>                </xs:complexType>            </xs:element>        </xs:sequence>    </xs:complexType>    <xs:element
+      name="root">        <xs:complexType>            <xs:sequence>                <xs:any
+      namespace="http://www.w3.org/2001/XMLSchema" processContents="strict" minOccurs="0"/>                <xs:element
+      name="OlapInfo" type="OlapInfo" minOccurs="0"/>                <xs:element name="Axes"
+      type="Axes" minOccurs="0"/>                <xs:element name="CellData" type="CellData"
+      minOccurs="0"/>            </xs:sequence>        </xs:complexType>    </xs:element></xs:schema>
+
+      <OlapInfo><CubeInfo><Cube><CubeName>GOSJAR</CubeName><LastDataUpdate xmlns="http://schemas.microsoft.com/analysisservices/2003/engine">2012-02-09T09:45:32</LastDataUpdate><LastSchemaUpdate
+      xmlns="http://schemas.microsoft.com/analysisservices/2003/engine">2012-02-09T09:45:32</LastSchemaUpdate></Cube></CubeInfo><AxesInfo><AxisInfo
+      name="Axis0"><HierarchyInfo name="[Measures]"><UName name="[Measures].[MEMBER_UNIQUE_NAME]"
+      type="xsd:string"/><Caption name="[Measures].[MEMBER_CAPTION]" type="xsd:string"/><LName
+      name="[Measures].[LEVEL_UNIQUE_NAME]" type="xsd:string"/><LNum name="[Measures].[LEVEL_NUMBER]"
+      type="xsd:int"/><DisplayInfo name="[Measures].[DISPLAY_INFO]" type="xsd:unsignedInt"/></HierarchyInfo></AxisInfo><AxisInfo
+      name="Axis1"><HierarchyInfo name="[Razlog prijave].[Razlog]"><UName name="[Razlog
+      prijave].[Razlog].[MEMBER_UNIQUE_NAME]" type="xsd:string"/><Caption name="[Razlog
+      prijave].[Razlog].[MEMBER_CAPTION]" type="xsd:string"/><LName name="[Razlog
+      prijave].[Razlog].[LEVEL_UNIQUE_NAME]" type="xsd:string"/><LNum name="[Razlog
+      prijave].[Razlog].[LEVEL_NUMBER]" type="xsd:int"/><DisplayInfo name="[Razlog
+      prijave].[Razlog].[DISPLAY_INFO]" type="xsd:unsignedInt"/></HierarchyInfo><HierarchyInfo
+      name="[Lokacija].[Kvart]"><UName name="[Lokacija].[Kvart].[MEMBER_UNIQUE_NAME]"
+      type="xsd:string"/><Caption name="[Lokacija].[Kvart].[MEMBER_CAPTION]" type="xsd:string"/><LName
+      name="[Lokacija].[Kvart].[LEVEL_UNIQUE_NAME]" type="xsd:string"/><LNum name="[Lokacija].[Kvart].[LEVEL_NUMBER]"
+      type="xsd:int"/><DisplayInfo name="[Lokacija].[Kvart].[DISPLAY_INFO]" type="xsd:unsignedInt"/></HierarchyInfo></AxisInfo><AxisInfo
+      name="SlicerAxis"><HierarchyInfo name="[Vrsta].[Vrsta]"><UName name="[Vrsta].[Vrsta].[MEMBER_UNIQUE_NAME]"
+      type="xsd:string"/><Caption name="[Vrsta].[Vrsta].[MEMBER_CAPTION]" type="xsd:string"/><LName
+      name="[Vrsta].[Vrsta].[LEVEL_UNIQUE_NAME]" type="xsd:string"/><LNum name="[Vrsta].[Vrsta].[LEVEL_NUMBER]"
+      type="xsd:int"/><DisplayInfo name="[Vrsta].[Vrsta].[DISPLAY_INFO]" type="xsd:unsignedInt"/></HierarchyInfo><HierarchyInfo
+      name="[Ulica].[ulica]"><UName name="[Ulica].[ulica].[MEMBER_UNIQUE_NAME]" type="xsd:string"/><Caption
+      name="[Ulica].[ulica].[MEMBER_CAPTION]" type="xsd:string"/><LName name="[Ulica].[ulica].[LEVEL_UNIQUE_NAME]"
+      type="xsd:string"/><LNum name="[Ulica].[ulica].[LEVEL_NUMBER]" type="xsd:int"/><DisplayInfo
+      name="[Ulica].[ulica].[DISPLAY_INFO]" type="xsd:unsignedInt"/></HierarchyInfo><HierarchyInfo
+      name="[Produkt].[Produkt]"><UName name="[Produkt].[Produkt].[MEMBER_UNIQUE_NAME]"
+      type="xsd:string"/><Caption name="[Produkt].[Produkt].[MEMBER_CAPTION]" type="xsd:string"/><LName
+      name="[Produkt].[Produkt].[LEVEL_UNIQUE_NAME]" type="xsd:string"/><LNum name="[Produkt].[Produkt].[LEVEL_NUMBER]"
+      type="xsd:int"/><DisplayInfo name="[Produkt].[Produkt].[DISPLAY_INFO]" type="xsd:unsignedInt"/></HierarchyInfo></AxisInfo></AxesInfo><CellInfo><Value
+      name="VALUE"/><FmtValue name="FORMATTED_VALUE" type="xsd:string"/><CellOrdinal
+      name="CELL_ORDINAL" type="xsd:unsignedInt"/></CellInfo></OlapInfo><Axes><Axis
+      name="Axis0"><Tuples><Tuple><Member Hierarchy="[Measures]"><UName>[Measures].[Broj]</UName><Caption>Broj</Caption><LName>[Measures].[MeasuresLevel]</LName><LNum>0</LNum><DisplayInfo>0</DisplayInfo></Member></Tuple></Tuples></Axis><Axis
+      name="Axis1"><Tuples><Tuple><Member Hierarchy="[Razlog prijave].[Razlog]"><UName>[Razlog
+      prijave].[razlog].&amp;[1]</UName><Caption>Ne radi svjetiljka</Caption><LName>[Razlog
+      prijave].[Razlog].[razlog]</LName><LNum>1</LNum><DisplayInfo>0</DisplayInfo></Member><Member
+      Hierarchy="[Lokacija].[Kvart]"><UName>[Lokacija].[kvar].&amp;[11]</UName><Caption>NOVI
+      ZAGREB – ZAPAD</Caption><LName>[Lokacija].[Kvart].[kvar]</LName><LNum>1</LNum><DisplayInfo>0</DisplayInfo></Member></Tuple><Tuple><Member
+      Hierarchy="[Razlog prijave].[Razlog]"><UName>[Razlog prijave].[razlog].&amp;[1]</UName><Caption>Ne
+      radi svjetiljka</Caption><LName>[Razlog prijave].[Razlog].[razlog]</LName><LNum>1</LNum><DisplayInfo>131072</DisplayInfo></Member><Member
+      Hierarchy="[Lokacija].[Kvart]"><UName>[Lokacija].[kvar].&amp;[15]</UName><Caption>GORNJA
+      DUBRAVA</Caption><LName>[Lokacija].[Kvart].[kvar]</LName><LNum>1</LNum><DisplayInfo>131072</DisplayInfo></Member></Tuple><Tuple><Member
+      Hierarchy="[Razlog prijave].[Razlog]"><UName>[Razlog prijave].[razlog].&amp;[1]</UName><Caption>Ne
+      radi svjetiljka</Caption><LName>[Razlog prijave].[Razlog].[razlog]</LName><LNum>1</LNum><DisplayInfo>131072</DisplayInfo></Member><Member
+      Hierarchy="[Lokacija].[Kvart]"><UName>[Lokacija].[kvar].&amp;[20]</UName><Caption>SESVETE</Caption><LName>[Lokacija].[Kvart].[kvar]</LName><LNum>1</LNum><DisplayInfo>131072</DisplayInfo></Member></Tuple><Tuple><Member
+      Hierarchy="[Razlog prijave].[Razlog]"><UName>[Razlog prijave].[razlog].&amp;[1]</UName><Caption>Ne
+      radi svjetiljka</Caption><LName>[Razlog prijave].[Razlog].[razlog]</LName><LNum>1</LNum><DisplayInfo>131072</DisplayInfo></Member><Member
+      Hierarchy="[Lokacija].[Kvart]"><UName>[Lokacija].[kvar].&amp;[10]</UName><Caption>NOVI
+      ZAGREB – ISTOK</Caption><LName>[Lokacija].[Kvart].[kvar]</LName><LNum>1</LNum><DisplayInfo>131072</DisplayInfo></Member></Tuple><Tuple><Member
+      Hierarchy="[Razlog prijave].[Razlog]"><UName>[Razlog prijave].[razlog].&amp;[1]</UName><Caption>Ne
+      radi svjetiljka</Caption><LName>[Razlog prijave].[Razlog].[razlog]</LName><LNum>1</LNum><DisplayInfo>131072</DisplayInfo></Member><Member
+      Hierarchy="[Lokacija].[Kvart]"><UName>[Lokacija].[kvar].&amp;[8]</UName><Caption>MAKSIMIR</Caption><LName>[Lokacija].[Kvart].[kvar]</LName><LNum>1</LNum><DisplayInfo>131072</DisplayInfo></Member></Tuple><Tuple><Member
+      Hierarchy="[Razlog prijave].[Razlog]"><UName>[Razlog prijave].[razlog].&amp;[1]</UName><Caption>Ne
+      radi svjetiljka</Caption><LName>[Razlog prijave].[Razlog].[razlog]</LName><LNum>1</LNum><DisplayInfo>131072</DisplayInfo></Member><Member
+      Hierarchy="[Lokacija].[Kvart]"><UName>[Lokacija].[kvar].&amp;[6]</UName><Caption>GORNJI
+      GRAD – MEDVEŠČAK</Caption><LName>[Lokacija].[Kvart].[kvar]</LName><LNum>1</LNum><DisplayInfo>131072</DisplayInfo></Member></Tuple><Tuple><Member
+      Hierarchy="[Razlog prijave].[Razlog]"><UName>[Razlog prijave].[razlog].&amp;[1]</UName><Caption>Ne
+      radi svjetiljka</Caption><LName>[Razlog prijave].[Razlog].[razlog]</LName><LNum>1</LNum><DisplayInfo>131072</DisplayInfo></Member><Member
+      Hierarchy="[Lokacija].[Kvart]"><UName>[Lokacija].[kvar].&amp;[13]</UName><Caption>TREŠNJEVKA
+      – JUG</Caption><LName>[Lokacija].[Kvart].[kvar]</LName><LNum>1</LNum><DisplayInfo>131072</DisplayInfo></Member></Tuple><Tuple><Member
+      Hierarchy="[Razlog prijave].[Razlog]"><UName>[Razlog prijave].[razlog].&amp;[1]</UName><Caption>Ne
+      radi svjetiljka</Caption><LName>[Razlog prijave].[Razlog].[razlog]</LName><LNum>1</LNum><DisplayInfo>131072</DisplayInfo></Member><Member
+      Hierarchy="[Lokacija].[Kvart]"><UName>[Lokacija].[kvar].&amp;[7]</UName><Caption>TRNJE</Caption><LName>[Lokacija].[Kvart].[kvar]</LName><LNum>1</LNum><DisplayInfo>131072</DisplayInfo></Member></Tuple><Tuple><Member
+      Hierarchy="[Razlog prijave].[Razlog]"><UName>[Razlog prijave].[razlog].&amp;[1]</UName><Caption>Ne
+      radi svjetiljka</Caption><LName>[Razlog prijave].[Razlog].[razlog]</LName><LNum>1</LNum><DisplayInfo>131072</DisplayInfo></Member><Member
+      Hierarchy="[Lokacija].[Kvart]"><UName>[Lokacija].[kvar].&amp;[9]</UName><Caption>PEŠČENICA
+      - ŽITNJAK</Caption><LName>[Lokacija].[Kvart].[kvar]</LName><LNum>1</LNum><DisplayInfo>131072</DisplayInfo></Member></Tuple><Tuple><Member
+      Hierarchy="[Razlog prijave].[Razlog]"><UName>[Razlog prijave].[razlog].&amp;[1]</UName><Caption>Ne
+      radi svjetiljka</Caption><LName>[Razlog prijave].[Razlog].[razlog]</LName><LNum>1</LNum><DisplayInfo>131072</DisplayInfo></Member><Member
+      Hierarchy="[Lokacija].[Kvart]"><UName>[Lokacija].[kvar].&amp;[18]</UName><Caption>PODSUSED
+      – VRAPČE</Caption><LName>[Lokacija].[Kvart].[kvar]</LName><LNum>1</LNum><DisplayInfo>131072</DisplayInfo></Member></Tuple><Tuple><Member
+      Hierarchy="[Razlog prijave].[Razlog]"><UName>[Razlog prijave].[razlog].&amp;[1]</UName><Caption>Ne
+      radi svjetiljka</Caption><LName>[Razlog prijave].[Razlog].[razlog]</LName><LNum>1</LNum><DisplayInfo>131072</DisplayInfo></Member><Member
+      Hierarchy="[Lokacija].[Kvart]"><UName>[Lokacija].[kvar].&amp;[14]</UName><Caption>ČRNOMEREC</Caption><LName>[Lokacija].[Kvart].[kvar]</LName><LNum>1</LNum><DisplayInfo>131072</DisplayInfo></Member></Tuple><Tuple><Member
+      Hierarchy="[Razlog prijave].[Razlog]"><UName>[Razlog prijave].[razlog].&amp;[1]</UName><Caption>Ne
+      radi svjetiljka</Caption><LName>[Razlog prijave].[Razlog].[razlog]</LName><LNum>1</LNum><DisplayInfo>131072</DisplayInfo></Member><Member
+      Hierarchy="[Lokacija].[Kvart]"><UName>[Lokacija].[kvar].&amp;[5]</UName><Caption>DONJI
+      GRAD</Caption><LName>[Lokacija].[Kvart].[kvar]</LName><LNum>1</LNum><DisplayInfo>131072</DisplayInfo></Member></Tuple><Tuple><Member
+      Hierarchy="[Razlog prijave].[Razlog]"><UName>[Razlog prijave].[razlog].&amp;[1]</UName><Caption>Ne
+      radi svjetiljka</Caption><LName>[Razlog prijave].[Razlog].[razlog]</LName><LNum>1</LNum><DisplayInfo>131072</DisplayInfo></Member><Member
+      Hierarchy="[Lokacija].[Kvart]"><UName>[Lokacija].[kvar].&amp;[16]</UName><Caption>DONJA
+      DUBRAVA</Caption><LName>[Lokacija].[Kvart].[kvar]</LName><LNum>1</LNum><DisplayInfo>131072</DisplayInfo></Member></Tuple><Tuple><Member
+      Hierarchy="[Razlog prijave].[Razlog]"><UName>[Razlog prijave].[razlog].&amp;[3]</UName><Caption>Ne
+      radi više svjetiljki</Caption><LName>[Razlog prijave].[Razlog].[razlog]</LName><LNum>1</LNum><DisplayInfo>131072</DisplayInfo></Member><Member
+      Hierarchy="[Lokacija].[Kvart]"><UName>[Lokacija].[kvar].&amp;[11]</UName><Caption>NOVI
+      ZAGREB – ZAPAD</Caption><LName>[Lokacija].[Kvart].[kvar]</LName><LNum>1</LNum><DisplayInfo>131072</DisplayInfo></Member></Tuple><Tuple><Member
+      Hierarchy="[Razlog prijave].[Razlog]"><UName>[Razlog prijave].[razlog].&amp;[3]</UName><Caption>Ne
+      radi više svjetiljki</Caption><LName>[Razlog prijave].[Razlog].[razlog]</LName><LNum>1</LNum><DisplayInfo>131072</DisplayInfo></Member><Member
+      Hierarchy="[Lokacija].[Kvart]"><UName>[Lokacija].[kvar].&amp;[10]</UName><Caption>NOVI
+      ZAGREB – ISTOK</Caption><LName>[Lokacija].[Kvart].[kvar]</LName><LNum>1</LNum><DisplayInfo>131072</DisplayInfo></Member></Tuple><Tuple><Member
+      Hierarchy="[Razlog prijave].[Razlog]"><UName>[Razlog prijave].[razlog].&amp;[3]</UName><Caption>Ne
+      radi više svjetiljki</Caption><LName>[Razlog prijave].[Razlog].[razlog]</LName><LNum>1</LNum><DisplayInfo>131072</DisplayInfo></Member><Member
+      Hierarchy="[Lokacija].[Kvart]"><UName>[Lokacija].[kvar].&amp;[7]</UName><Caption>TRNJE</Caption><LName>[Lokacija].[Kvart].[kvar]</LName><LNum>1</LNum><DisplayInfo>131072</DisplayInfo></Member></Tuple><Tuple><Member
+      Hierarchy="[Razlog prijave].[Razlog]"><UName>[Razlog prijave].[razlog].&amp;[37]</UName><Caption>Redovna
+      izmjena</Caption><LName>[Razlog prijave].[Razlog].[razlog]</LName><LNum>1</LNum><DisplayInfo>131072</DisplayInfo></Member><Member
+      Hierarchy="[Lokacija].[Kvart]"><UName>[Lokacija].[kvar].&amp;[13]</UName><Caption>TREŠNJEVKA
+      – JUG</Caption><LName>[Lokacija].[Kvart].[kvar]</LName><LNum>1</LNum><DisplayInfo>131072</DisplayInfo></Member></Tuple><Tuple><Member
+      Hierarchy="[Razlog prijave].[Razlog]"><UName>[Razlog prijave].[razlog].&amp;[1]</UName><Caption>Ne
+      radi svjetiljka</Caption><LName>[Razlog prijave].[Razlog].[razlog]</LName><LNum>1</LNum><DisplayInfo>131072</DisplayInfo></Member><Member
+      Hierarchy="[Lokacija].[Kvart]"><UName>[Lokacija].[kvar].&amp;[12]</UName><Caption>TREŠNJEVKA
+      – SJEVER</Caption><LName>[Lokacija].[Kvart].[kvar]</LName><LNum>1</LNum><DisplayInfo>131072</DisplayInfo></Member></Tuple><Tuple><Member
+      Hierarchy="[Razlog prijave].[Razlog]"><UName>[Razlog prijave].[razlog].&amp;[3]</UName><Caption>Ne
+      radi više svjetiljki</Caption><LName>[Razlog prijave].[Razlog].[razlog]</LName><LNum>1</LNum><DisplayInfo>131072</DisplayInfo></Member><Member
+      Hierarchy="[Lokacija].[Kvart]"><UName>[Lokacija].[kvar].&amp;[20]</UName><Caption>SESVETE</Caption><LName>[Lokacija].[Kvart].[kvar]</LName><LNum>1</LNum><DisplayInfo>131072</DisplayInfo></Member></Tuple><Tuple><Member
+      Hierarchy="[Razlog prijave].[Razlog]"><UName>[Razlog prijave].[razlog].&amp;[37]</UName><Caption>Redovna
+      izmjena</Caption><LName>[Razlog prijave].[Razlog].[razlog]</LName><LNum>1</LNum><DisplayInfo>131072</DisplayInfo></Member><Member
+      Hierarchy="[Lokacija].[Kvart]"><UName>[Lokacija].[kvar].&amp;[15]</UName><Caption>GORNJA
+      DUBRAVA</Caption><LName>[Lokacija].[Kvart].[kvar]</LName><LNum>1</LNum><DisplayInfo>131072</DisplayInfo></Member></Tuple></Tuples></Axis><Axis
+      name="SlicerAxis"><Tuples><Tuple><Member Hierarchy="[Vrsta].[Vrsta]"><UName>[Vrsta].[Vrsta
+      prijave]</UName><Caption>Vrsta prijave</Caption><LName>[Vrsta].[Vrsta].[All-L]</LName><LNum>0</LNum><DisplayInfo>5</DisplayInfo></Member><Member
+      Hierarchy="[Ulica].[ulica]"><UName>[Ulica].[Ulice].[Ulica]</UName><Caption>Ulica</Caption><LName>[Ulica].[ulica].[Ulice]</LName><LNum>0</LNum><DisplayInfo>5092</DisplayInfo></Member><Member
+      Hierarchy="[Produkt].[Produkt]"><UName>[Produkt].[All-M]</UName><Caption>All-M</Caption><LName>[Produkt].[Produkt].[All-L]</LName><LNum>0</LNum><DisplayInfo>15</DisplayInfo></Member></Tuple></Tuples></Axis></Axes><CellData><Cell
+      CellOrdinal="0"><Value xsi:type="xsd:long">1401</Value><FmtValue>1401</FmtValue></Cell><Cell
+      CellOrdinal="1"><Value xsi:type="xsd:long">1383</Value><FmtValue>1383</FmtValue></Cell><Cell
+      CellOrdinal="2"><Value xsi:type="xsd:long">1316</Value><FmtValue>1316</FmtValue></Cell><Cell
+      CellOrdinal="3"><Value xsi:type="xsd:long">1208</Value><FmtValue>1208</FmtValue></Cell><Cell
+      CellOrdinal="4"><Value xsi:type="xsd:long">1043</Value><FmtValue>1043</FmtValue></Cell><Cell
+      CellOrdinal="5"><Value xsi:type="xsd:long">994</Value><FmtValue>994</FmtValue></Cell><Cell
+      CellOrdinal="6"><Value xsi:type="xsd:long">955</Value><FmtValue>955</FmtValue></Cell><Cell
+      CellOrdinal="7"><Value xsi:type="xsd:long">837</Value><FmtValue>837</FmtValue></Cell><Cell
+      CellOrdinal="8"><Value xsi:type="xsd:long">823</Value><FmtValue>823</FmtValue></Cell><Cell
+      CellOrdinal="9"><Value xsi:type="xsd:long">821</Value><FmtValue>821</FmtValue></Cell><Cell
+      CellOrdinal="10"><Value xsi:type="xsd:long">717</Value><FmtValue>717</FmtValue></Cell><Cell
+      CellOrdinal="11"><Value xsi:type="xsd:long">677</Value><FmtValue>677</FmtValue></Cell><Cell
+      CellOrdinal="12"><Value xsi:type="xsd:long">635</Value><FmtValue>635</FmtValue></Cell><Cell
+      CellOrdinal="13"><Value xsi:type="xsd:long">631</Value><FmtValue>631</FmtValue></Cell><Cell
+      CellOrdinal="14"><Value xsi:type="xsd:long">620</Value><FmtValue>620</FmtValue></Cell><Cell
+      CellOrdinal="15"><Value xsi:type="xsd:long">602</Value><FmtValue>602</FmtValue></Cell><Cell
+      CellOrdinal="16"><Value xsi:type="xsd:long">597</Value><FmtValue>597</FmtValue></Cell><Cell
+      CellOrdinal="17"><Value xsi:type="xsd:long">581</Value><FmtValue>581</FmtValue></Cell><Cell
+      CellOrdinal="18"><Value xsi:type="xsd:long">580</Value><FmtValue>580</FmtValue></Cell><Cell
+      CellOrdinal="19"><Value xsi:type="xsd:long">575</Value><FmtValue>575</FmtValue></Cell></CellData></root></return></ExecuteResponse></soap:Body></soap:Envelope>'
+    http_version: '1.1'

@@ -11,6 +11,10 @@ doc
 # bundler
 .bundle
 
+*.un~
+
+*.swp
+
 # jeweler generated
 pkg
 

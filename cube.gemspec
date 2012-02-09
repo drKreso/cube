@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["drKreso"]
   s.date = "2012-02-09"
-  s.description = "TODO: longer description of your gem"
+  s.description = "Eases the pain I had to go through to get to the data of Xmla based OLAP provider"
   s.email = "kresimir.bojcic@gmail.com"
   s.extra_rdoc_files = [
     "LICENSE.txt",

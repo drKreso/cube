@@ -41,13 +41,9 @@ module XMLA
       @axes ||= axes.reduce([]) do |result, axe|
         result << tuple(axe).reduce([]) { |y, member|
           data = (member[0] == :member) ? member[1] : member[:member]
-          if data.class == Hash
-            y << [data[:caption].strip]
-          elsif data.size == 1
-            y <<  data[:caption].strip
-          else
-            y << data.select { |item_data| item_data.class == Hash }.reduce([]) { |z,item_data| z << item_data[:caption].strip }
-          end
+          y << ( data.class == Hash || data.size == 1 ?
+                                      [data[:caption].strip].flatten :
+                                      data.select { |item_data| item_data.class == Hash }.reduce([]) { |z,item_data| z << item_data[:caption].strip } )
         }
       end
     end

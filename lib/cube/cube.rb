@@ -46,12 +46,7 @@ module XMLA
           elsif data.size == 1
             y <<  data[:caption].strip
           else
-            y << data.reduce([]) { |z, item_data|
-              if (item_data.class == Hash)
-                caption = item_data[:caption].strip
-                z << caption
-              end
-            }
+            y << data.select { |item_data| item_data.class == Hash }.reduce([]) { |z,item_data| z << item_data[:caption].strip }
           end
         }
       end

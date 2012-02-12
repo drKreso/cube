@@ -1,0 +1,40 @@
+---
+- !ruby/struct:VCR::HTTPInteraction
+  request: !ruby/struct:VCR::Request
+    method: :post
+    uri: http://localhost:8383/mondrian/xmla
+    body: ! "<?xml version=\"1.0\" encoding=\"UTF-8\"?><env:Envelope xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"
+      xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:wsdl=\"http://tempuri.org/wsdl/\"
+      xmlns:env=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ins0=\"http://tempuri.org/type\"><env:Body><Execute
+      xmlns=\"urn:schemas-microsoft-com:xml-analysis\"><Command> <Statement> <![CDATA[
+      \ ]]> </Statement> </Command> <Properties> <PropertyList> <Catalog></Catalog>\n
+      \                    <Format>Multidimensional</Format> <AxisFormat>TupleFormat</AxisFormat>
+      </PropertyList> </Properties></Execute></env:Body></env:Envelope>"
+    headers:
+      soapaction:
+      - ! '"urn:schemas-microsoft-com:xml-analysis:Execute"'
+      content-type:
+      - text/xml;charset=UTF-8
+      content-length:
+      - '612'
+  response: !ruby/struct:VCR::Response
+    status: !ruby/struct:VCR::ResponseStatus
+      code: 200
+      message: OK
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      content-type:
+      - text/xml
+      transfer-encoding:
+      - chunked
+      date:
+      - Sat, 11 Feb 2012 23:02:52 GMT
+    body: ! "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\"
+      SOAP-ENV:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\" >\n<SOAP-ENV:Header>\n</SOAP-ENV:Header>\n<SOAP-ENV:Body>\n<SOAP-ENV:Fault>\n
+      \ <faultcode>SOAP-ENV:Server.00HSBB01</faultcode>\n  <faultstring>XMLA SOAP
+      Body processing error</faultstring>\n  <faultactor>Mondrian</faultactor>\n  <detail>\n
+      \   <XA:error xmlns:XA=\"http://mondrian.sourceforge.net\">\n      <code>00HSBB01</code>\n
+      \     <desc>The Mondrian XML: Mondrian Error:Internal error: Unknown catalog
+      &#39;&#39;</desc>\n    </XA:error>\n  </detail>\n</SOAP-ENV:Fault>\n</SOAP-ENV:Body>\n</SOAP-ENV:Envelope>\n"
+    http_version: '1.1'

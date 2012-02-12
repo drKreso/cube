@@ -1,3 +1,4 @@
+#encoding: utf-8
 require 'cube'
 require 'webmock'
 require 'vcr'
@@ -12,6 +13,7 @@ XMLA.configure do |c|
  c.endpoint = "http://localhost:8282/icCube/xmla"
  c.catalog = "GOSJAR"
 end
+
 
 describe XMLA::Cube do
   it 'supports multiple items on x axis' do
@@ -41,6 +43,22 @@ describe XMLA::Cube do
       result[2].should == "|GORNJA DUBRAVA|1383"
       result[20].should == "Redovna izmjena|GORNJA DUBRAVA|575"
     end
+  end
+
+  it 'should connect to mondrian' do
+   XMLA.configure do |c|
+     c.endpoint = "http://localhost:8383/mondrian/xmla"
+     c.catalog = "GOSJAR"
+   end
+
+   VCR.use_cassette('mondrian_broj_intervencija') do
+
+    result = XMLA::Cube.execute("SELECT NON EMPTY {Hierarchize({[Measures].[Broj intervencija]})} ON COLUMNS, NON EMPTY {Hierarchize({[Gradska cetvrt].[Gradska cetvrt].Members})} ON ROWS FROM [Kvarovi]")
+
+    result.size.should == 17
+    result[0].should == "|Broj intervencija"
+    result[2].should == "GORNJI GRAD – MEDVEŠČAK|2259"
+   end
   end
 
 end

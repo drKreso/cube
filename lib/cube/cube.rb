@@ -11,6 +11,7 @@ HTTPI.log = false
 module XMLA
 
   class Cube
+    attr_reader :query, :catalog
 
     def Cube.execute(query, catalog = XMLA.catalog)
       Cube.new(query, catalog).as_table
@@ -62,7 +63,7 @@ module XMLA
       end
 
       @response = client.request :execute,  xmlns:"urn:schemas-microsoft-com:xml-analysis" do
-        soap.body = "<Command> <Statement> <![CDATA[ #{@query} ]]> </Statement> </Command> <Properties> <PropertyList> <Catalog>#{@catalog}</Catalog>
+        soap.body = "<Command> <Statement> <![CDATA[ #{query} ]]> </Statement> </Command> <Properties> <PropertyList> <Catalog>#{catalog}</Catalog>
                      <Format>Multidimensional</Format> <AxisFormat>TupleFormat</AxisFormat> </PropertyList> </Properties>"
         end
     end
@@ -87,3 +88,5 @@ module XMLA
 
   end
 end
+
+

@@ -35,7 +35,7 @@ Limitations
 ------------
 * No drill down (fails to even parse the result)
 * No multi named columns
-* Tested only with icCube, in theory works with every Xmla provider
+* Tested only with icCube and Mondrian XMLA, in theory works with every XMLA provider
 
 Contributing to cube
 -------------------------------

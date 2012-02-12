@@ -45,6 +45,12 @@ describe XMLA::Cube do
     end
   end
 
+  it 'check if request is correct - to fix that bug with class varables not beign visible inside the block' do
+    XMLA::Cube.send(:request_body, "SELECT", "GOSJAR").should == 
+      "<Command> <Statement> <![CDATA[ SELECT ]]> </Statement> </Command> <Properties> <PropertyList> <Catalog>GOSJAR</Catalog>
+      <Format>Multidimensional</Format> <AxisFormat>TupleFormat</AxisFormat> </PropertyList> </Properties>"
+  end
+
   it 'should connect to mondrian' do
    XMLA.configure do |c|
      c.endpoint = "http://localhost:8383/mondrian/xmla"
@@ -52,9 +58,7 @@ describe XMLA::Cube do
    end
 
    VCR.use_cassette('mondrian_broj_intervencija') do
-
     result = XMLA::Cube.execute("SELECT NON EMPTY {Hierarchize({[Measures].[Broj intervencija]})} ON COLUMNS, NON EMPTY {Hierarchize({[Gradska cetvrt].[Gradska cetvrt].Members})} ON ROWS FROM [Kvarovi]")
-
     result.size.should == 17
     result[0].should == "|Broj intervencija"
     result[2].should == "GORNJI GRAD – MEDVEŠČAK|2259"

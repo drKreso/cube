@@ -63,9 +63,8 @@ module XMLA
       end
 
       @response = client.request :execute,  xmlns:"urn:schemas-microsoft-com:xml-analysis" do
-        soap.body = "<Command> <Statement> <![CDATA[ #{query} ]]> </Statement> </Command> <Properties> <PropertyList> <Catalog>#{catalog}</Catalog>
-                     <Format>Multidimensional</Format> <AxisFormat>TupleFormat</AxisFormat> </PropertyList> </Properties>"
-        end
+        soap.body = Cube.request_body(query, catalog)
+      end
     end
 
     #cleanup table so items don't repeat (if they are same)
@@ -85,6 +84,11 @@ module XMLA
     end
 
     let(:tuple) { |axe| axe[:tuples][:tuple] }
+
+    def Cube.request_body(query, catalog)
+      "<Command> <Statement> <![CDATA[ #{query} ]]> </Statement> </Command> <Properties> <PropertyList> <Catalog>#{catalog}</Catalog>
+      <Format>Multidimensional</Format> <AxisFormat>TupleFormat</AxisFormat> </PropertyList> </Properties>"
+    end
 
   end
 end

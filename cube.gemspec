@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "cube"
-  s.version = "1.0.0"
+  s.version = "1.1.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["drKreso"]
-  s.date = "2012-02-09"
+  s.date = "2012-02-12"
   s.description = "Eases the pain I had to go through to get to the data of Xmla based OLAP provider"
   s.email = "kresimir.bojcic@gmail.com"
   s.extra_rdoc_files = [
@@ -30,8 +30,10 @@ Gem::Specification.new do |s|
     "lib/cube/cube.rb",
     "lib/cube/xmla.rb",
     "lib/wsdl/xmla.xml",
+    "spec/cassettes/.yml",
     "spec/cassettes/kvartovi_u_recima.yml",
     "spec/cassettes/kvatovi_u_koloni.yml",
+    "spec/cassettes/mondrian_broj_intervencija.yml",
     "spec/cassettes/razlog_prijave_i_kvart.yml",
     "spec/cube_spec.rb",
     "spec/spec_helper.rb"
@@ -48,6 +50,7 @@ Gem::Specification.new do |s|
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<savon>, [">= 0"])
       s.add_runtime_dependency(%q<webmock>, [">= 0"])
+      s.add_runtime_dependency(%q<guerrilla_patch>, [">= 0"])
       s.add_development_dependency(%q<vcr>, [">= 0"])
       s.add_development_dependency(%q<rspec>, ["~> 2.3.0"])
       s.add_development_dependency(%q<bundler>, ["~> 1.0.0"])
@@ -55,6 +58,7 @@ Gem::Specification.new do |s|
     else
       s.add_dependency(%q<savon>, [">= 0"])
       s.add_dependency(%q<webmock>, [">= 0"])
+      s.add_dependency(%q<guerrilla_patch>, [">= 0"])
       s.add_dependency(%q<vcr>, [">= 0"])
       s.add_dependency(%q<rspec>, ["~> 2.3.0"])
       s.add_dependency(%q<bundler>, ["~> 1.0.0"])
@@ -63,6 +67,7 @@ Gem::Specification.new do |s|
   else
     s.add_dependency(%q<savon>, [">= 0"])
     s.add_dependency(%q<webmock>, [">= 0"])
+    s.add_dependency(%q<guerrilla_patch>, [">= 0"])
     s.add_dependency(%q<vcr>, [">= 0"])
     s.add_dependency(%q<rspec>, ["~> 2.3.0"])
     s.add_dependency(%q<bundler>, ["~> 1.0.0"])

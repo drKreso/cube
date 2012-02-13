@@ -18,17 +18,19 @@ Set up your catalog and endpoint
 
 ```
 XMLA.configure do |c|
- c.endpoint = "http://localhost:8282/icCube/xmla"
  c.catalog = "GOSJAR"
+ c.endpoint = "http://localhost:8282/icCube/xmla"
 end
 ```
 
 Usage
 -------
 ```
-table = XMLA::Cube.execute "select [Location].[City].children  on COLUMNS,
-                                   [Measures].[Count] on ROWS
-                            from [GOSJAR]"
+table = XMLA::Cube.execute <<-MDX
+    SELECT [Location].[City].children  on COLUMNS,
+           [Measures].[Count] on ROWS
+    FROM [GOSJAR]"
+MDX
 ```
 
 Limitations

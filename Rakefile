@@ -18,7 +18,7 @@ Jeweler::Tasks.new do |gem|
   gem.homepage = "http://github.com/drkreso/cube"
   gem.license = "MIT"
   gem.summary = %Q{Get's the data from OLAP cube via XMLA}
-  gem.description = %Q{Eases the pain I had to go through to get to the data of Xmla based OLAP provider}
+  gem.description = %Q{Eases the pain I had to go through to get to the data out of XMLA based OLAP provider}
   gem.email = "kresimir.bojcic@gmail.com"
   gem.authors = ["drKreso"]
   # dependencies defined in Gemfile

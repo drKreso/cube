@@ -23,7 +23,7 @@ module XMLA
 
     let(:x_axe)  { @x_axe ||= axes[0] }
     let(:y_axe)  { @y_axe ||= axes[1] }
-    let(:y_size) { y_axe[0].size }
+    let(:y_size) { y_axe[0].nil? ? 0 : y_axe[0].size }
     let(:x_size) { x_axe.size }
 
     private
@@ -80,10 +80,16 @@ module XMLA
 
     def cell_data
       cell_data = @response.to_hash[:execute_response][:return][:root][:cell_data]
-      @data ||= cell_data.reduce([]) { |data, cell| cell[1].reduce(data) { |data, value| data << value[:value] } }
+      @data ||= cell_data.reduce([]) do |data, cell|
+        cell[1].reduce(data) do |data, value|
+          data << (value.class == Hash ?  value[:value] : value[1] )
+        end
+      end
     end
 
-    let(:tuple) { |axe| axe[:tuples][:tuple] }
+    def tuple(axe)
+      axe[:tuples].nil? ? [] : axe[:tuples][:tuple] 
+    end
 
     def Cube.request_body(query, catalog)
       "<Command> <Statement> <![CDATA[ #{query} ]]> </Statement> </Command> <Properties> <PropertyList> <Catalog>#{catalog}</Catalog>

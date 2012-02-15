@@ -51,11 +51,15 @@ describe XMLA::Cube do
       <Format>Multidimensional</Format> <AxisFormat>TupleFormat</AxisFormat> </PropertyList> </Properties>"
   end
 
-  it 'should connect to mondrian' do
-   XMLA.configure do |c|
-     c.endpoint = "http://localhost:8383/mondrian/xmla"
-     c.catalog = "GOSJAR"
-   end
+  def configure_mondrian
+    XMLA.configure do |c|
+      c.endpoint = "http://localhost:8383/mondrian/xmla"
+      c.catalog = "GOSJAR"
+    end
+  end
+
+  it'should connect to mondrian' do
+    configure_mondrian
 
    VCR.use_cassette('mondrian_broj_intervencija') do
     result = XMLA::Cube.execute("SELECT NON EMPTY {Hierarchize({[Measures].[Broj intervencija]})} ON COLUMNS, NON EMPTY {Hierarchize({[Gradska cetvrt].[Gradska cetvrt].Members})} ON ROWS FROM [Kvarovi]")
@@ -64,5 +68,36 @@ describe XMLA::Cube do
     result[2].should == "GORNJI GRAD – MEDVEŠČAK|2259"
    end
   end
+
+  it'should handle the case with only one row in result' do
+   configure_mondrian
+
+   VCR.use_cassette('mondrian_jedan_red_odgovor') do
+   result = XMLA::Cube.execute <<-MDX
+       SELECT NON EMPTY {Hierarchize({[Measures].[Broj intervencija]})} ON COLUMNS,
+              non empty ( { Filter (Hierarchize({[Razlog prijave].children}), [Measures].[Broj intervencija] >= 7000  )}) ON ROWS
+       FROM [Kvarovi]
+    MDX
+    result.size.should == 2
+    result[0].should == "|Broj intervencija"
+    result[1].should == "Ne radi svjetiljka|14442"
+   end
+  end
+
+
+  it'should handle the case with zero rows in result' do
+   configure_mondrian
+
+   VCR.use_cassette('mondrian_nula_redaka') do
+   result = XMLA::Cube.execute <<-MDX
+       SELECT NON EMPTY {Hierarchize({[Measures].[Broj intervencija]})} ON COLUMNS,
+              non empty ( { Filter (Hierarchize({[Razlog prijave].children}), [Measures].[Broj intervencija] >= 15000  )}) ON ROWS
+       FROM [Kvarovi]
+    MDX
+    result.size.should == 1
+    result[0].should == ""
+   end
+  end
+
 
 end

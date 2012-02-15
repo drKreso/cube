@@ -5,12 +5,12 @@
 
 Gem::Specification.new do |s|
   s.name = "cube"
-  s.version = "1.1.0"
+  s.version = "1.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["drKreso"]
-  s.date = "2012-02-12"
-  s.description = "Eases the pain I had to go through to get to the data of Xmla based OLAP provider"
+  s.date = "2012-02-15"
+  s.description = "Eases the pain I had to go through to get to the data out of XMLA based OLAP provider"
   s.email = "kresimir.bojcic@gmail.com"
   s.extra_rdoc_files = [
     "LICENSE.txt",
@@ -34,6 +34,8 @@ Gem::Specification.new do |s|
     "spec/cassettes/kvartovi_u_recima.yml",
     "spec/cassettes/kvatovi_u_koloni.yml",
     "spec/cassettes/mondrian_broj_intervencija.yml",
+    "spec/cassettes/mondrian_jedan_red_odgovor.yml",
+    "spec/cassettes/mondrian_nula_redaka.yml",
     "spec/cassettes/razlog_prijave_i_kvart.yml",
     "spec/cube_spec.rb",
     "spec/spec_helper.rb"

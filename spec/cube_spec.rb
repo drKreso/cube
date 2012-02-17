@@ -58,7 +58,7 @@ describe XMLA::Cube do
     end
   end
 
-  it'should connect to mondrian' do
+  it 'should connect to mondrian' do
     configure_mondrian
 
    VCR.use_cassette('mondrian_broj_intervencija') do
@@ -69,7 +69,7 @@ describe XMLA::Cube do
    end
   end
 
-  it'should handle the case with only one row in result' do
+  it 'should handle the case with only one row in result' do
    configure_mondrian
 
    VCR.use_cassette('mondrian_jedan_red_odgovor') do
@@ -85,7 +85,7 @@ describe XMLA::Cube do
   end
 
 
-  it'should handle the case with zero rows in result' do
+  it 'should handle the case with zero rows in result' do
    configure_mondrian
 
    VCR.use_cassette('mondrian_nula_redaka') do
@@ -99,5 +99,19 @@ describe XMLA::Cube do
    end
   end
 
+  it 'should handle when scalar value is returned' do
+   configure_mondrian
+
+   VCR.use_cassette('mondrian_scalar_value') do
+   result = XMLA::Cube.execute <<-MDX
+       SELECT {Hierarchize({[Measures].[Rok otklona]})} ON COLUMNS
+       FROM [Kvarovi]
+       WHERE [Vrijeme prijave].[2011]
+    MDX
+    result.size.should == 1
+    result[0].should == "7.356"
+   end
+
+  end
 
 end

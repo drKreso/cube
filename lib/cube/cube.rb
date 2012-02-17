@@ -18,19 +18,24 @@ module XMLA
     end
 
     def as_table 
+      return [table] if y_size == 0
       clean_table(table, y_size).reduce([]) { |result, row| result << row.flatten.join('|') }
     end
 
     let(:x_axe)  { @x_axe ||= axes[0] }
     let(:y_axe)  { @y_axe ||= axes[1] }
-    let(:y_size) { y_axe[0].nil? ? 0 : y_axe[0].size }
+    let(:y_size) { (y_axe.nil? || y_axe[0].nil?) ? 0 : y_axe[0].size }
     let(:x_size) { x_axe.size }
 
     private
 
     #header and rows
     def table
-      (0...y_axe.size).reduce(header) { |result, j| result << ( y_axe[j] + (0...x_size).map { |i| "#{cell_data[i + j]}" }) }
+      if (header.size == 1 && y_size == 0)
+        cell_data[0]
+      else
+        (0...y_axe.size).reduce(header) { |result, j| result << ( y_axe[j] + (0...x_size).map { |i| "#{cell_data[i + j]}" }) }
+      end
     end
 
     def header
@@ -80,6 +85,7 @@ module XMLA
 
     def cell_data
       cell_data = @response.to_hash[:execute_response][:return][:root][:cell_data]
+      return [""] if cell_data.nil? 
       @data ||= cell_data.reduce([]) do |data, cell|
         cell[1].reduce(data) do |data, value|
           data << (value.class == Hash ?  value[:value] : value[1] )

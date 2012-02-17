@@ -7,19 +7,17 @@
       xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:wsdl=\"http://tempuri.org/wsdl/\"
       xmlns:env=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ins0=\"http://tempuri.org/type\"><env:Body><Execute
       xmlns=\"urn:schemas-microsoft-com:xml-analysis\"><Command> <Statement> <![CDATA[
-      \       SELECT NON EMPTY {Hierarchize({[Measures].[Broj intervencija]})} ON
-      COLUMNS,\n              non empty ( { Filter (Hierarchize({[Razlog prijave].children}),
-      [Measures].[Broj intervencija] >= 7000  )}) ON ROWS\n       FROM [Kvarovi]\n
-      ]]> </Statement> </Command> <Properties> <PropertyList> <Catalog>GOSJAR</Catalog>\n
-      \     <Format>Multidimensional</Format> <AxisFormat>TupleFormat</AxisFormat>
-      </PropertyList> </Properties></Execute></env:Body></env:Envelope>"
+      \       SELECT {Hierarchize({[Measures].[Rok otklona]})} ON COLUMNS\n       FROM
+      [Kvarovi]\n       WHERE [Vrijeme prijave].[2011]\n ]]> </Statement> </Command>
+      <Properties> <PropertyList> <Catalog>GOSJAR</Catalog>\n      <Format>Multidimensional</Format>
+      <AxisFormat>TupleFormat</AxisFormat> </PropertyList> </Properties></Execute></env:Body></env:Envelope>"
     headers:
       soapaction:
       - ! '"urn:schemas-microsoft-com:xml-analysis:Execute"'
       content-type:
       - text/xml;charset=UTF-8
       content-length:
-      - '839'
+      - '730'
   response: !ruby/struct:VCR::Response
     status: !ruby/struct:VCR::ResponseStatus
       code: 200
@@ -32,7 +30,7 @@
       transfer-encoding:
       - chunked
       date:
-      - Fri, 17 Feb 2012 22:41:49 GMT
+      - Fri, 17 Feb 2012 22:22:09 GMT
     body: ! "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\"
       SOAP-ENV:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\" >\n<SOAP-ENV:Header>\n</SOAP-ENV:Header>\n<SOAP-ENV:Body>\n<cxmla:ExecuteResponse
       xmlns:cxmla=\"urn:schemas-microsoft-com:xml-analysis\">\n  <cxmla:return>\n
@@ -143,29 +141,26 @@
       \             <Caption name=\"[Measures].[MEMBER_CAPTION]\"/>\n              <LName
       name=\"[Measures].[LEVEL_UNIQUE_NAME]\"/>\n              <LNum name=\"[Measures].[LEVEL_NUMBER]\"/>\n
       \             <DisplayInfo name=\"[Measures].[DISPLAY_INFO]\"/>\n            </HierarchyInfo>\n
-      \         </AxisInfo>\n          <AxisInfo name=\"Axis1\">\n            <HierarchyInfo
-      name=\"Razlog prijave.Razlog prijave\">\n              <UName name=\"[Razlog
-      prijave].[MEMBER_UNIQUE_NAME]\"/>\n              <Caption name=\"[Razlog prijave].[MEMBER_CAPTION]\"/>\n
-      \             <LName name=\"[Razlog prijave].[LEVEL_UNIQUE_NAME]\"/>\n              <LNum
-      name=\"[Razlog prijave].[LEVEL_NUMBER]\"/>\n              <DisplayInfo name=\"[Razlog
-      prijave].[DISPLAY_INFO]\"/>\n            </HierarchyInfo>\n          </AxisInfo>\n
-      \         <AxisInfo name=\"SlicerAxis\"/>\n        </AxesInfo>\n        <CellInfo>\n
+      \         </AxisInfo>\n          <AxisInfo name=\"SlicerAxis\">\n            <HierarchyInfo
+      name=\"Vrijeme prijave\">\n              <UName name=\"[Vrijeme prijave].[MEMBER_UNIQUE_NAME]\"/>\n
+      \             <Caption name=\"[Vrijeme prijave].[MEMBER_CAPTION]\"/>\n              <LName
+      name=\"[Vrijeme prijave].[LEVEL_UNIQUE_NAME]\"/>\n              <LNum name=\"[Vrijeme
+      prijave].[LEVEL_NUMBER]\"/>\n              <DisplayInfo name=\"[Vrijeme prijave].[DISPLAY_INFO]\"/>\n
+      \           </HierarchyInfo>\n          </AxisInfo>\n        </AxesInfo>\n        <CellInfo>\n
       \         <Value name=\"VALUE\"/>\n          <FmtValue name=\"FORMATTED_VALUE\"/>\n
       \         <FormatString name=\"FORMAT_STRING\"/>\n        </CellInfo>\n      </OlapInfo>\n
       \     <Axes>\n        <Axis name=\"Axis0\">\n          <Tuples>\n            <Tuple>\n
-      \             <Member Hierarchy=\"Measures\">\n                <UName>[Measures].[Broj
-      intervencija]</UName>\n                <Caption>Broj intervencija</Caption>\n
-      \               <LName>[Measures].[MeasuresLevel]</LName>\n                <LNum>0</LNum>\n
-      \               <DisplayInfo>0</DisplayInfo>\n              </Member>\n            </Tuple>\n
-      \         </Tuples>\n        </Axis>\n        <Axis name=\"Axis1\">\n          <Tuples>\n
-      \           <Tuple>\n              <Member Hierarchy=\"Razlog prijave.Razlog
-      prijave\">\n                <UName>[Razlog prijave].[Ne radi svjetiljka]</UName>\n
-      \               <Caption>Ne radi svjetiljka</Caption>\n                <LName>[Razlog
-      prijave].[Razlog prijave]</LName>\n                <LNum>1</LNum>\n                <DisplayInfo>0</DisplayInfo>\n
+      \             <Member Hierarchy=\"Measures\">\n                <UName>[Measures].[Rok
+      otklona]</UName>\n                <Caption>Rok otklona</Caption>\n                <LName>[Measures].[MeasuresLevel]</LName>\n
+      \               <LNum>0</LNum>\n                <DisplayInfo>0</DisplayInfo>\n
       \             </Member>\n            </Tuple>\n          </Tuples>\n        </Axis>\n
-      \       <Axis name=\"SlicerAxis\">\n          <Tuples>\n            <Tuple/>\n
-      \         </Tuples>\n        </Axis>\n      </Axes>\n      <CellData>\n        <Cell
-      CellOrdinal=\"0\">\n          <Value xsi:type=\"xsd:int\">14442</Value>\n          <FmtValue>14,442</FmtValue>\n
+      \       <Axis name=\"SlicerAxis\">\n          <Tuples>\n            <Tuple>\n
+      \             <Member Hierarchy=\"Vrijeme prijave\">\n                <UName>[Time].[2011]</UName>\n
+      \               <Caption>2011</Caption>\n                <LName>[Time].[Godina]</LName>\n
+      \               <LNum>1</LNum>\n                <DisplayInfo>12</DisplayInfo>\n
+      \             </Member>\n            </Tuple>\n          </Tuples>\n        </Axis>\n
+      \     </Axes>\n      <CellData>\n        <Cell CellOrdinal=\"0\">\n          <Value
+      xsi:type=\"xsd:double\">7.356</Value>\n          <FmtValue>7.356</FmtValue>\n
       \         <FormatString/>\n        </Cell>\n      </CellData>\n    </root>\n
       \ </cxmla:return>\n</cxmla:ExecuteResponse>\n</SOAP-ENV:Body>\n</SOAP-ENV:Envelope>\n"
     http_version: '1.1'

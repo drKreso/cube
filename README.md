@@ -18,7 +18,7 @@ Set up your catalog and endpoint
 
 ```
 XMLA.configure do |c|
- c.catalog = "GOSJAR"
+ c.catalog = "OUTAGE"
  c.endpoint = "http://localhost:8282/icCube/xmla"
 end
 ```
@@ -29,20 +29,20 @@ Queriying the OLAP
 table = XMLA::Cube.execute <<-MDX
     SELECT [Location].[City].children  on COLUMNS,
            [Measures].[Count] on ROWS
-    FROM [GOSJAR]"
+    FROM [OUTAGE]"
 MDX
 ```
+Table has two attribute : header and rows
 
 Scalar results
 -----------
 ```
-result = XMLA::Cube.execute_scalar <<-MDX
+average_mtbf = XMLA::Cube.execute_scalar <<-MDX
    SELECT {Hierarchize({[Measures].[MTBF]})} ON COLUMNS
-   FROM [Outage]
+   FROM [OUTAGE]
    WHERE [Country].[Croatia]
 MDX
 ```
-This returns decimal value.
 
 Limitations
 ------------

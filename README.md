@@ -19,7 +19,7 @@ Set up your catalog and endpoint
 ```
 XMLA.configure do |c|
  c.catalog = "OUTAGE"
- c.endpoint = "http://localhost:8282/icCube/xmla"
+ c.endpoint = "http://localhost:8383/mondrian/xmla"
 end
 ```
 
@@ -32,7 +32,7 @@ table = XMLA::Cube.execute <<-MDX
     FROM [OUTAGE]"
 MDX
 ```
-Table has two attributes: header and rows
+Table has two attributes: header and rows.
 
 Scalar results
 -----------

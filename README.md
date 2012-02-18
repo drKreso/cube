@@ -32,7 +32,7 @@ table = XMLA::Cube.execute <<-MDX
     FROM [OUTAGE]"
 MDX
 ```
-Table has two attributes : header and rows
+Table has two attributes: header and rows
 
 Scalar results
 -----------

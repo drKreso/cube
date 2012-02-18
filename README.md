@@ -23,7 +23,7 @@ XMLA.configure do |c|
 end
 ```
 
-Queriying the OLAP
+Querying the OLAP
 -------
 ```
 table = XMLA::Cube.execute <<-MDX

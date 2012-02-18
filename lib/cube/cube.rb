@@ -15,7 +15,7 @@ module XMLA
     attr_reader :query, :catalog
 
     def Cube.execute(query, catalog = XMLA.catalog)
-      Cube.new(query, catalog).as_table
+      OlapResult.new(Cube.new(query, catalog).as_table)
     end
 
     def Cube.execute_scalar(query, catalog = XMLA.catalog)
@@ -108,6 +108,16 @@ module XMLA
     end
 
   end
+
+  class OlapResult 
+    attr_reader :header, :rows
+    def initialize(table)
+      @header = table[0]
+      table.delete_at(0)
+      @rows = table
+    end
+  end
+
 end
 
 

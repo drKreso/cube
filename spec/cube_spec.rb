@@ -103,13 +103,12 @@ describe XMLA::Cube do
    configure_mondrian
 
    VCR.use_cassette('mondrian_scalar_value') do
-   result = XMLA::Cube.execute <<-MDX
+   result = XMLA::Cube.execute_scalar <<-MDX
        SELECT {Hierarchize({[Measures].[Rok otklona]})} ON COLUMNS
        FROM [Kvarovi]
        WHERE [Vrijeme prijave].[2011]
     MDX
-    result.size.should == 1
-    result[0].should == "7.356"
+    result.should == 7.356
    end
 
   end

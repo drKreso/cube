@@ -23,7 +23,7 @@ XMLA.configure do |c|
 end
 ```
 
-Usage
+Queriying the OLAP
 -------
 ```
 table = XMLA::Cube.execute <<-MDX
@@ -32,6 +32,17 @@ table = XMLA::Cube.execute <<-MDX
     FROM [GOSJAR]"
 MDX
 ```
+
+Scalar results
+-----------
+```
+result = XMLA::Cube.execute_scalar <<-MDX
+   SELECT {Hierarchize({[Measures].[MTBF]})} ON COLUMNS
+   FROM [Outage]
+   WHERE [Country].[Croatia]
+MDX
+```
+This returns decimal value.
 
 Limitations
 ------------

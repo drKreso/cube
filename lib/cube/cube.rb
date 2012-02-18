@@ -1,5 +1,6 @@
 require 'savon'
 require 'guerrilla_patch'
+require 'bigdecimal'
 
 Savon.configure do |config|
   config.soap_version = 1
@@ -17,17 +18,21 @@ module XMLA
       Cube.new(query, catalog).as_table
     end
 
+    def Cube.execute_scalar(query, catalog = XMLA.catalog)
+      BigDecimal.new Cube.new(query, catalog).as_table[0]
+    end
+
     def as_table 
       return [table] if y_size == 0
-      clean_table(table, y_size).reduce([]) { |result, row| result << row.flatten.join('|') }
+      clean_table(table, y_size).reduce([]) { |result, row| result << row.flatten }
     end
+
+    private
 
     let(:x_axe)  { @x_axe ||= axes[0] }
     let(:y_axe)  { @y_axe ||= axes[1] }
     let(:y_size) { (y_axe.nil? || y_axe[0].nil?) ? 0 : y_axe[0].size }
     let(:x_size) { x_axe.size }
-
-    private
 
     #header and rows
     def table

@@ -1,7 +1,7 @@
 Cube
 ================
 
-Use this gem talk to the OLAP based backend via XMLA SOAP messages from Ruby.
+Talk to the OLAP based backend via XMLA SOAP messages from Ruby.
 You can send (simple) MDX queries and get the result back in a human friendly from. 
 
 Installation

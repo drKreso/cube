@@ -1,6 +1,7 @@
 require 'savon'
 require 'guerrilla_patch'
 require 'bigdecimal'
+require_relative 'olap_result'
 
 Savon.configure do |config|
   config.soap_version = 1
@@ -29,17 +30,14 @@ module XMLA
 
     private
 
-    let(:x_axe)  { @x_axe ||= axes[0] }
-    let(:y_axe)  { @y_axe ||= axes[1] }
-    let(:y_size) { (y_axe.nil? || y_axe[0].nil?) ? 0 : y_axe[0].size }
-    let(:x_size) { x_axe.size }
-
     #header and rows
     def table
       if (header.size == 1 && y_size == 0)
         cell_data[0]
       else
-        (0...y_axe.size).reduce(header) { |result, j| result << ( y_axe[j] + (0...x_size).map { |i| "#{cell_data[i + j]}" }) }
+        (0...y_axe.size).reduce(header) do |result, j| 
+          result << ( y_axe[j] + (0...x_size).map { |i| "#{cell_data[i + j]}" })
+        end
       end
     end
 
@@ -48,13 +46,17 @@ module XMLA
     end
 
     def axes
-      axes = @response.to_hash[:execute_response][:return][:root][:axes][:axis].select { |axe| axe[:@name] != "SlicerAxis" }
+      axes = all_axes.select { |axe| axe[:@name] != "SlicerAxis" }
       @axes ||= axes.reduce([]) do |result, axe|
         result << tuple(axe).reduce([]) { |y, member|
           data = (member[0] == :member) ? member[1] : member[:member]
-          y << ( data.class == Hash || data.size == 1 ?
-                                      [data[:caption].strip].flatten :
-                                      data.select { |item_data| item_data.class == Hash }.reduce([]) { |z,item_data| z << item_data[:caption].strip } )
+          if ( data.class == Hash || data.size == 1 )
+            y << [data[:caption].strip].flatten 
+          else
+            y << data.select { |item_data| item_data.class == Hash }.reduce([]) do |z,item_data| 
+              z << item_data[:caption].strip 
+            end
+          end
         }
       end
     end
@@ -82,7 +84,13 @@ module XMLA
       above_row = []
       #filter if they are not last column, and they are same as the item on the row above
       table.reduce([]) { |result, row|
-        result <<  row.each_with_index.map { |item,i| (i == number_of_colums) ? item : ((item == above_row[i]) ? '' : item ) }
+        result <<  row.each_with_index.map do |item,i|
+          if i == number_of_colums
+            item 
+          else
+            item == above_row[i] ? '' : item 
+          end
+        end
         above_row = row
         result
       }
@@ -98,26 +106,28 @@ module XMLA
       end
     end
 
-    def tuple(axe)
-      axe[:tuples].nil? ? [] : axe[:tuples][:tuple] 
-    end
+    let(:tuple) { |axe| axe[:tuples].nil? ? [] : axe[:tuples][:tuple] }
+    let(:all_axes) { @response.to_hash[:execute_response][:return][:root][:axes][:axis] }
+    let(:x_axe)  { @x_axe ||= axes[0] }
+    let(:y_axe)  { @y_axe ||= axes[1] }
+    let(:y_size) { (y_axe.nil? || y_axe[0].nil?) ? 0 : y_axe[0].size }
+    let(:x_size) { x_axe.size }
 
     def Cube.request_body(query, catalog)
-      "<Command> <Statement> <![CDATA[ #{query} ]]> </Statement> </Command> <Properties> <PropertyList> <Catalog>#{catalog}</Catalog>
-      <Format>Multidimensional</Format> <AxisFormat>TupleFormat</AxisFormat> </PropertyList> </Properties>"
+      <<-REQUEST
+        <Command>
+          <Statement> <![CDATA[ #{query} ]]> </Statement> 
+        </Command>
+        <Properties>
+          <PropertyList> 
+            <Catalog>#{catalog}</Catalog>
+            <Format>Multidimensional</Format> 
+            <AxisFormat>TupleFormat</AxisFormat>
+          </PropertyList> 
+        </Properties>
+      REQUEST
     end
-
   end
-
-  class OlapResult 
-    attr_reader :header, :rows
-    def initialize(table)
-      @header = table[0]
-      table.delete_at(0)
-      @rows = table
-    end
-  end
-
 end
 
 

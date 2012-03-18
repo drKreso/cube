@@ -46,9 +46,9 @@ describe XMLA::Cube do
   end
 
   it 'check if request is correct - to fix that bug with class varables not beign visible inside the block' do
-    XMLA::Cube.send(:request_body, "SELECT", "GOSJAR").should == 
-      "<Command> <Statement> <![CDATA[ SELECT ]]> </Statement> </Command> <Properties> <PropertyList> <Catalog>GOSJAR</Catalog>
-      <Format>Multidimensional</Format> <AxisFormat>TupleFormat</AxisFormat> </PropertyList> </Properties>"
+    XMLA::Cube.send(:request_body, "SELECT", "GOSJAR").gsub("\n","").gsub(" ", "").should == 
+      "<Command><Statement><![CDATA[SELECT]]></Statement></Command><Properties><PropertyList><Catalog>GOSJAR</Catalog>
+       <Format>Multidimensional</Format><AxisFormat>TupleFormat</AxisFormat></PropertyList></Properties>".gsub("\n","").gsub(" ","")
   end
 
   def configure_mondrian

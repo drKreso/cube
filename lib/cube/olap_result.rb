@@ -5,4 +5,9 @@ class OlapResult
     table.delete_at(0)
     @rows = table
   end
+
+  def prepare_data
+    result = [] << [@header] << @rows
+    result.flatten(1)
+  end
 end

@@ -2,7 +2,6 @@
 require 'cube'
 require 'webmock'
 require 'vcr'
-require 'guerrilla_patch'
 
 VCR.config do |c|
   c.cassette_library_dir = 'spec/cassettes'

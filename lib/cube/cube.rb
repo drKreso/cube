@@ -1,5 +1,4 @@
 require 'savon'
-require 'guerrilla_patch'
 require 'bigdecimal'
 require_relative 'olap_result'
 
@@ -106,12 +105,29 @@ module XMLA
       end
     end
 
-    let(:tuple) { |axe| axe[:tuples].nil? ? [] : axe[:tuples][:tuple] }
-    let(:all_axes) { @response.to_hash[:execute_response][:return][:root][:axes][:axis] }
-    let(:x_axe)  { @x_axe ||= axes[0] }
-    let(:y_axe)  { @y_axe ||= axes[1] }
-    let(:y_size) { (y_axe.nil? || y_axe[0].nil?) ? 0 : y_axe[0].size }
-    let(:x_size) { x_axe.size }
+    def tuple axe 
+      axe[:tuples].nil? ? [] : axe[:tuples][:tuple]
+    end
+    
+    def all_axes
+      @response.to_hash[:execute_response][:return][:root][:axes][:axis]
+    end
+    
+    def x_axe 
+      @x_axe ||= axes[0] 
+    end
+    
+    def y_axe
+      @y_axe ||= axes[1]
+    end
+    
+    def y_size 
+      (y_axe.nil? || y_axe[0].nil?) ? 0 : y_axe[0].size
+    end
+    
+    def x_size
+      x_axe.size
+    end
 
     def Cube.request_body(query, catalog)
       <<-REQUEST

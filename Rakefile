@@ -2,28 +2,17 @@
 
 require 'rubygems'
 require 'bundler'
+
+$:.push File.expand_path("../lib", __FILE__)
+require "cube/version"
+
 begin
-  Bundler.setup(:default, :development)
+  Bundler::GemHelper.install_tasks
 rescue Bundler::BundlerError => e
   $stderr.puts e.message
   $stderr.puts "Run `bundle install` to install missing gems"
   exit e.status_code
 end
-require 'rake'
-
-require 'jeweler'
-Jeweler::Tasks.new do |gem|
-  # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
-  gem.name = "cube"
-  gem.homepage = "http://github.com/drkreso/cube"
-  gem.license = "MIT"
-  gem.summary = %Q{Get's the data from OLAP cube via XMLA(Mondiran, Pentaho, icCube)}
-  gem.description = %Q{Eases the pain I had to go through to get to the data out of XMLA based OLAP provider(Mondiran, Pentaho, icCube)}
-  gem.email = "kresimir.bojcic@gmail.com"
-  gem.authors = ["drKreso"]
-  # dependencies defined in Gemfile
-end
-Jeweler::RubygemsDotOrgTasks.new
 
 require 'rspec/core'
 require 'rspec/core/rake_task'
@@ -40,7 +29,7 @@ task :default => :spec
 
 require 'rake/rdoctask'
 Rake::RDocTask.new do |rdoc|
-  version = File.exist?('VERSION') ? File.read('VERSION') : ""
+  version = Cube::VERSION
 
   rdoc.rdoc_dir = 'rdoc'
   rdoc.title = "cube #{version}"

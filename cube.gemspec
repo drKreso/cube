@@ -23,6 +23,6 @@ Gem::Specification.new do |gem|
 
   gem.add_dependency "savon", ">= 0"
   gem.add_dependency "webmock", ">= 0"
-  gem.add_dependency "guerrilla_patch", ">= 0"
+
 end
 

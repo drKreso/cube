@@ -8,7 +8,7 @@ Gem::Specification.new do |gem|
   gem.email         = ["kresimir.bojcic@gmail.com", "scott@kujilabs.com"]
   gem.description = "Eases the pain I had to go through to get to the data out of XMLA based OLAP provider(Mondiran, Pentaho, icCube)"
   gem.summary = "Get's the data from OLAP cube via XMLA(Mondiran, Pentaho, icCube)"
-  gem.homepage = "http://github.com/kujilabs/cube"
+  gem.homepage = "http://github.com/drKreso/cube"
   gem.date = "2012-05-13"
 
 

@@ -5,6 +5,10 @@ Cube
 Talk to the OLAP based backend via XMLA SOAP messages from Ruby.
 You can send (simple) MDX queries and get the result back in a human friendly from. 
 
+When harnesing OLAP power you are one tiny step away from graphs like this (highcharts.js)
+
+![Example data visualisation](/doc/example.png "Example data visualisation")
+
 Installation
 ------------
 Add to Gemfile

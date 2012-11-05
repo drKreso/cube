@@ -7,7 +7,9 @@ You can send (simple) MDX queries and get the result back in a human friendly fr
 
 When harnesing OLAP power you are one tiny step away from graphs like this (highcharts.js)
 
-![Example data visualisation](/doc/example.png "Example data visualisation")
+![Example data visualisation](https://github.com/drKreso/cube/raw/master/doc/example.png)
+##
+  
 
 Installation
 ------------

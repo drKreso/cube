@@ -5,7 +5,7 @@ Cube
 Talk to the OLAP based backend via XMLA SOAP messages from Ruby.
 You can send (simple) MDX queries and get the result back in a human friendly from. 
 
-When harnesing OLAP power you are one tiny step away from graphs like this (highcharts.js) on real online systems. That is why it is worthed to mess with OLAP providers.
+When harnessing OLAP power you are one tiny step away from graphs like this (highcharts.js) on real online systems. That is why it is worthed to mess with OLAP providers.
 
 ![Example data visualisation](https://github.com/drKreso/cube/raw/master/doc/example.png)
 ##
